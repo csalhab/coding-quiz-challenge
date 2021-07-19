@@ -48,7 +48,7 @@ THEN I can save my initials and my score
 ## Mock-Up
 
 The following animation demonstrates the application functionality:
-(./assets/images/04-web-apis-homework-demo.gif)
+![User must answer the challenge questions before time runs out, highscores will be maintained](./assets/images/04-web-apis-homework-demo.gif)
 
 ## Grading Requirements
 
