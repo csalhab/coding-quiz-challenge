@@ -1,38 +1,38 @@
 
 
 //Data (global variables, things to keep track of)=====================
-//question1 object
-var question1 = {
+//made array of objects
+var quiz = [
+{
     question: "Commonly used data types DO NOT include:",
     choice: ["strings", "booleans", "alerts", "numbers"],
     answer: "alerts"
-};
+},
 
-var question2 = {
+{
     question: "The condition in an if/else statement is enclosed within _____.",
     choice: ["quotes", "curly brackets", "parentheses", "square brackets"],
     answer: "parentheses"
-};
+},
 
-var question3 = {
+{
     question: "Arrays in JavaScript can be used to store _____.",
     choice: ["numbers and strings", "other arrays", "booleans", "all the above"],
     answer: "all the above"
-};
+},
 
-var question4 = {
+{
     question: "String values must be enclosed within _____ when being assigned to variables.",
     choice: ["commas", "curly brackets", "quotes", "parentheses"],
     answer: "quotes"
-};
+},
 
-var question5 = {
+{
     question: "A very useful tool used during development and debugging for printing content to the debugger is:",
     choice: ["JavaScript", "terminal/bash", "for loops", "console.log"],
     answer: "console.log"
-};
-
-var questionNumber = ["question1", "question2", "question3", "question4", "question5"];
+}
+];
 
 //answer indicator, finished playing, final score message, enter initials
 var rightAnswer = "Correct!";
@@ -90,37 +90,48 @@ function setTime() {
 
 function hideStartElements() {
     var quizStartEl = document.querySelector("#quizStart");
-    //quizStartEl.parentNode.removeChild(quizStartEl); //ask Ben
-    quizStartEl.textContent = "";
+    quizStartEl.setAttribute("style", "display: none");
 
-    //trigger show questions/options chain, start with question1
-    showQuestion(questionNumber[0]);
+    //trigger show questions/options chain from quiz array
+    for (var i=0; i < quiz.length; i++) {
+        showQuestion(quiz[i]);
+    }
 }
 
-function showQuestion(questionNum) {
+function showQuestion(quizItem) {
 
     //select body element
     var bodyEl = document.querySelector("body");
 
     var sectionEl = document.createElement("section");
     bodyEl.appendChild(sectionEl);
+
+    console.log(quizItem);
+    console.log(quizItem.question);
+    console.log(quizItem.choice[0]);
+
     var pEl = document.createElement("p");
-    //console.log(Object(questionNum).question);
-    console.log(question1.question);
-    pEl.textContent = question1.question;
+    pEl.textContent = quizItem.question;
     sectionEl.appendChild(pEl);
     var olEl = document.createElement("ol");
     sectionEl.appendChild(olEl);
-    for (var i=0; i < question1.choice.length; i++) {
+    
+    for (var i=0; i < quizItem.choice.length; i++) {
         var liNum = "li" + i + "El";
         var liNum = document.createElement("li");
         olEl.appendChild(liNum);
-        liNum.textContent = question1.choice[i];
+        liNum.textContent = quizItem.choice[i];
     }
+
+    //check if user answered correctly
+    checkAnswer();
+
     var h2El = document.createElement("h2");
     sectionEl.appendChild(h2El);
 
+}
 
+function checkAnswer() {
 
 }
 
