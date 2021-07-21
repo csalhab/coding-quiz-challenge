@@ -15,7 +15,7 @@ main {
 }
 
 .enterInitials {
-    display: none;
+    display: inline;
 }
 
 .highscores-container {

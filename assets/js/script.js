@@ -37,6 +37,8 @@ var quiz = [
 //answer indicator, finished playing, final score message, enter initials
 var rightAnswer = "Correct! 20 points added to your score! Next question ..";
 var wrongAnswer = "Wrong! 10 seconds have been deducted from your time. Next question ..";
+var rightAnswerLast = "Correct! 20 points added to your score! This was the last question.";
+var wrongAnswerLast = "Wrong! 10 seconds have been deducted from your time. This was the last question.";
 var finishedPlaying = "All done!";
 var finalScoreMsg = "Your final score is ";
 var enterInitials = "Enter initials:";
@@ -131,9 +133,13 @@ function showQuestion(quizItem) {
             if (event.target.firstChild.data != quizItem.answer) {
                 console.log("wrong button selected");
                 //user selected wrong choice button
-                //show Wrong!
                 var wrongHeading = document.createElement("h2");
-                wrongHeading.textContent = wrongAnswer;
+                //show Wrong! or Wrong!/was last question
+                if (questionCounter !== quiz.length - 1) {
+                    wrongHeading.textContent = wrongAnswer;
+                } else {
+                    wrongHeading.textContent = wrongAnswerLast;
+                }
                 sectionEl.appendChild(wrongHeading);
                 //apply/subtract penalty from time
                 secondsLeft -= penalty;
@@ -142,9 +148,13 @@ function showQuestion(quizItem) {
             } else {
                 console.log("correct answer");
                 //user selected correct choice button
-                //show Correct!
                 var correctHeading = document.createElement("h2");
-                correctHeading.textContent = rightAnswer;
+                //show Correct! or Correct!/was last question
+                if (questionCounter !== quiz.length - 1) {
+                    correctHeading.textContent = rightAnswer;
+                } else {
+                    correctHeading.textContent = rightAnswerLast;
+                }
                 sectionEl.appendChild(correctHeading);
                 //add 20 points to score
                 score += 20;
@@ -173,14 +183,14 @@ function clearQuestionChoices() {
         } else {
             //show Enter Initials
             console.log("enter initials next");
-            allDoneShowEnterInitials();
+            allDoneEnterInitials();
         }
          
-    }, 3000);
+    }, 1000);
 
 }
 
-function allDoneShowEnterInitials() {
+function allDoneEnterInitials() {
 
     timeEl.textContent = "Time: 0";
     clearInterval(timerInterval);
@@ -201,12 +211,39 @@ function allDoneShowEnterInitials() {
     pFinalScoreEl.textContent = finalScoreMsg + score;
     sectionEl.appendChild(pFinalScoreEl);
 
-    //create div, that's part of section, to form for Enter Initials
-    var divEl = document.createElement("div");
-    sectionEl.appendChild(divEl);
+    /*
+    <div class="enterInitials">
+        <form action="">
+            <label for="userInitials">Enter initials:</label>
+            <input type="text" id="userInitials" name="userInitials">
+            <button id="userInitials" type="submit">Submit</button>
+        </form>
+    </div>
 
-    var enterInitialsDiv = document.querySelector(".enterInitials");
-    enterInitialsDiv.setAttribute("style", "display: inline");
+    */
+
+    //create div that's part of section, contains form for Enter Initials
+    //set attributes too
+    var divFormEl = document.createElement("div");
+    divFormEl.setAttribute("class", "enterInitials");
+    sectionEl.appendChild(divFormEl);
+    var formEl = document.createElement("form");
+    formEl.setAttribute("action", "");
+    divFormEl.appendChild(formEl);
+    var labelEl = document.createElement("label");
+    labelEl.setAttribute("for", "userInitials");
+    labelEl.textContent = "Enter initials:"
+    formEl.appendChild(labelEl);
+    var inputEl = document.createElement("input");
+    inputEl.setAttribute("type", "text");
+    inputEl.setAttribute("id", "userInitials");
+    inputEl.setAttribute("name", "userInitials");
+    formEl.appendChild(inputEl);
+    var submitButtonEl = document.createElement("button");
+    submitButtonEl.setAttribute("id", "userInitials");
+    submitButtonEl.setAttribute("type", "submit");
+    submitButtonEl.textContent = "Submit";
+    formEl.appendChild(submitButtonEl);
 }
 
 function showHighScores() {
@@ -216,8 +253,8 @@ function showHighScores() {
 
 //User Interactions====================================================
     //enter initials
-    var userInitialsBtn = document.querySelector("#userInitials");
-    userInitialsBtn.addEventListener("submit", showHighScores)
+    //var userInitialsBtn = document.querySelector("#userInitials");
+    //userInitialsBtn.addEventListener("submit", showHighScores)
     //click go back button
     //click clear highscores
     //click highscores link
