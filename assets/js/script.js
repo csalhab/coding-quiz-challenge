@@ -211,17 +211,6 @@ function allDoneEnterInitials() {
     pFinalScoreEl.textContent = finalScoreMsg + score;
     sectionEl.appendChild(pFinalScoreEl);
 
-    /*
-    <div class="enterInitials">
-        <form action="">
-            <label for="userInitials">Enter initials:</label>
-            <input type="text" id="userInitials" name="userInitials">
-            <button id="userInitials" type="submit">Submit</button>
-        </form>
-    </div>
-
-    */
-
     //create div that's part of section, contains form for Enter Initials
     //set attributes too
     var divFormEl = document.createElement("div");
@@ -243,18 +232,63 @@ function allDoneEnterInitials() {
     submitButtonEl.setAttribute("id", "userInitials");
     submitButtonEl.setAttribute("type", "submit");
     submitButtonEl.textContent = "Submit";
+    if (submitButtonEl) {
+        submitButtonEl.addEventListener("click", function() {
+            event.stopPropagation();
+            alert("clicked Enter Initials submit button");
+            showHighScores();
+        });
+    } else {
+        alert('No Enter Initials submit button');
+    }
     formEl.appendChild(submitButtonEl);
 }
 
-function showHighScores() {
-    var highScoresDiv = document.querySelector(".highscores-container");
-    highScoresDiv.setAttribute("style", "display: inline");
+function showHighScores(event) {
+    event.stopPropagation();
+    alert("hiii");
+/*
+    <div class="highscores-container">
+        <p>High Scores</p>
+        <ol>
+            <li>Claudia - 80</li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ol>
+        <button type="submit">Go back</button>
+        <button type="submit">Clear high scores</button>
+    </div>
+*/
+    var bodyEl = document.querySelector("body");
+    var divHighScoresEl = document.createElement("div");
+    divHighScoresEl.setAttribute("class", "highscores-container");
+    bodyEl.appendChild(divHighScoresEl);
+    var pHighScoresEl = document.createElement("p");
+    divHighScoresEl.appendChild(pHighScoresEl);
+    divHighScoresEl.textContent = "High Scores";
+    var olHighScoresEl = document.createElement("ol");
+    divHighScoresEl.appendChild(olHighScoresEl);
+    var liHighScoresEl = document.createElement("li");
+    olHighScoresEl.appendChild(liHighScoresEl);
+    var goBackBtnHighScoresEl = document.createElement("button");
+    goBackBtnHighScoresEl.setAttribute("type", "submit");
+    goBackBtnHighScoresEl.textContent = "Go back";
+    var clearHighScoresBtnHighScoresEl = document.createElement("button");
+    clearHighScoresBtnHighScoresEl.setAttribute("type", "submit");
+    clearHighScoresBtnHighScoresEl.textContent = "Clear high scores";
+
+
+
+    //var highScoresDiv = document.querySelector(".highscores-container");
+    //highScoresDiv.setAttribute("style", "display: inline");
 }
+
 
 //User Interactions====================================================
     //enter initials
     //var userInitialsBtn = document.querySelector("#userInitials");
-    //userInitialsBtn.addEventListener("submit", showHighScores)
+    //document.addEventListener("submit", showHighScores)
     //click go back button
     //click clear highscores
     //click highscores link
