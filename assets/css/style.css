@@ -13,3 +13,11 @@ main {
     display: flex;
     justify-content: center;
 }
+
+.enterInitials {
+    display: none;
+}
+
+.highscores-container {
+    display: none;
+}

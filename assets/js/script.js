@@ -198,16 +198,26 @@ function allDoneShowEnterInitials() {
 
     //create another p tag, that's part of section, to hold Your final score is #. text
     var pFinalScoreEl = document.createElement("p");
-    pFinalScoreEl.textContent = finalScoreMsg;
+    pFinalScoreEl.textContent = finalScoreMsg + score;
     sectionEl.appendChild(pFinalScoreEl);
 
     //create div, that's part of section, to form for Enter Initials
     var divEl = document.createElement("div");
     sectionEl.appendChild(divEl);
+
+    var enterInitialsDiv = document.querySelector(".enterInitials");
+    enterInitialsDiv.setAttribute("style", "display: inline");
+}
+
+function showHighScores() {
+    var highScoresDiv = document.querySelector(".highscores-container");
+    highScoresDiv.setAttribute("style", "display: inline");
 }
 
 //User Interactions====================================================
     //enter initials
+    var userInitialsBtn = document.querySelector("#userInitials");
+    userInitialsBtn.addEventListener("submit", showHighScores)
     //click go back button
     //click clear highscores
     //click highscores link
