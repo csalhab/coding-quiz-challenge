@@ -5,20 +5,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coding Quiz Challenge</title>
-    <script src="./assets/js/script.js"></script>
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
 
 </head>
 <body>
-    <div>View Highscores</div>
-    <div>Time: </div>
-    <header>Coding Quiz Challenge</header>
-    <div>
-        <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!
-        </p>
-    </div>
-    <button>Start Quiz</button>
+    <main>
+        <!-- holds top level View Highscores & Time: -->
+        <div class="container">
+            <div><a href="">View Highscores</a></div>
+            <div class="time">Time: 0</div>
+        </div>
+        <div id="quizStart">
+            <header>Coding Quiz Challenge</header>
+            <div>
+                <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!
+                </p>
+            </div>
+            <button type="button" id="startQuiz">Start Quiz</button>
+        </div>
+    </main>
+    <!-- section will hold quiz questions and choices and answer indicator -->
+    <!-- it will also hold All Done/final score:/Enter initials: input form field & Submit button -->
+    <!-- it will also hold Highscores leaderboard with Go Back & Clear Highscores buttons -->
+    <!-- it will also hold answer indicator (Correct! or Wrong!) & a borderline above -->
+    <section>
+        <p><!--Question/All done! goes here.. --></p>
+        <ol><!-- ordered list/list items/choices go here.. -->
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ol>
+        <!-- h2 is holder for answer indicator (Correct! or Wrong!) -->
+        <!-- need to show a borderline above -->
+        <h2></h2>
+        <!-- for All done!, no ol/li's, instead Your final score is #. -->
+        <p class="finalScore"></p>
+        <div>
+            <form action="">
+                <label for="userInitials">Enter initials:</label>
+                <input type="text" id="userInitials" name="userInitials">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </section>
+
+
+    <script src="./assets/js/script.js"></script>
     
 </body>
 </html>

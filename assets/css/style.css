@@ -4,3 +4,12 @@
     color: #800080;
     border: 1px solid red;
 }
+
+main {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}

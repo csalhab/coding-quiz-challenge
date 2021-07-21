@@ -1,81 +1,138 @@
+
+
 //Data (global variables, things to keep track of)=====================
 //question1 object
-question1: {
-    q: "Commonly used data types DO NOT include:",
-    choice1: "strings",
-    choice2: "booleans",
-    choice3: "alerts",
-    choice4: "numbers"
-}
+var question1 = {
+    question: "Commonly used data types DO NOT include:",
+    choice: ["strings", "booleans", "alerts", "numbers"],
+    answer: "alerts"
+};
 
-question2: {
-    q: "The condition in an if/else statement is enclosed within _____.",
-    choice1: "quotes",
-    choice2: "curly brackets",
-    choice3: "parentheses",
-    choice4: "square brackets"
-}
+var question2 = {
+    question: "The condition in an if/else statement is enclosed within _____.",
+    choice: ["quotes", "curly brackets", "parentheses", "square brackets"],
+    answer: "parentheses"
+};
 
-question3: {
-    q: "Arrays in JavaScript can be used to store _____.",
-    choice1: "numbers and strings",
-    choice2: "other arrays",
-    choice3: "booleans",
-    choice4: "all the above"
-}
+var question3 = {
+    question: "Arrays in JavaScript can be used to store _____.",
+    choice: ["numbers and strings", "other arrays", "booleans", "all the above"],
+    answer: "all the above"
+};
 
-question4: {
-    q: "String values must be enclosed within _____ when being assigned to variables.",
-    choice1: "commas",
-    choice2: "curly brackets",
-    choice3: "quotes",
-    choice4: "parentheses"
-}
+var question4 = {
+    question: "String values must be enclosed within _____ when being assigned to variables.",
+    choice: ["commas", "curly brackets", "quotes", "parentheses"],
+    answer: "quotes"
+};
 
-question5: {
-    q: "A very useful tool used during development and debugging for printing content to the debugger is:",
-    choice1: "JavaScript",
-    choice2: "terminal/bash",
-    choice3: "for loops",
-    choice4: "console.log"
-}
+var question5 = {
+    question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+    choice: ["JavaScript", "terminal/bash", "for loops", "console.log"],
+    answer: "console.log"
+};
+
+var questionNumber = ["question1", "question2", "question3", "question4", "question5"];
 
 //answer indicator, finished playing, final score message, enter initials
-var rightAnswer: "Correct!";
-var wrongAnswer: "Wrong!";
-var finishedPlaying: "All done!";
-var finalScoreMsg: "Your final score is ";
-var enterInitials: "Enter initials:";
+var rightAnswer = "Correct!";
+var wrongAnswer = "Wrong!";
+var finishedPlaying = "All done!";
+var finalScoreMsg = "Your final score is ";
+var enterInitials = "Enter initials:";
 
 
-//timer
-var timer: //number;
+//secondsLeft
+var secondsLeft = 10; //number
 
 //score
-var score: //number;
+var score = 100; //number
 
 //highscore
-var highScoresMsg: "Highscores";
-var highScoresLinkText: "Highscores";
+var highScoresMsg = "Highscores";
+var highScoresLinkText = "Highscores";
 
+//select element by class
+var timeEl = document.querySelector(".time");
+
+//this returns button element, which has an id of #startQuiz and assigns it to a variable called startQuizButton
+var startQuizButton = document.querySelector("#startQuiz");
+
+//this adds a listener to variable startQuizButton, listening for "click" event 
+//and will trigger/call setTime() function when button is clicked
+startQuizButton.addEventListener("click", setTime);
 
 //Functions============================================================
-    //
-    //
-    //
-    //
+
+function setTime() {
+    //shows starting time
+    timeEl.textContent = "Time: " + secondsLeft;
+
+    //trigger hide header, div/p/instructions and startQuizButton
+    hideStartElements();
+
+    //sets interval in variable
+    var timerInterval = setInterval(function() {
+        secondsLeft--;
+        //shows decrementing time
+        timeEl.textContent = "Time: " + secondsLeft;
+        
+        if (secondsLeft === 0) {
+            //shows final time of 0
+            timeEl.textContent = "Time: " + secondsLeft;
+            //stops execution of setInterval's actions
+            clearInterval(timerInterval);
+            //trigger All done!
+        }
+
+    }, 1000); //closes setInterval, triggered every second/1000ms
+} //ends setTime()
+
+function hideStartElements() {
+    var quizStartEl = document.querySelector("#quizStart");
+    //quizStartEl.parentNode.removeChild(quizStartEl); //ask Ben
+    quizStartEl.textContent = "";
+
+    //trigger show questions/options chain, start with question1
+    showQuestion(questionNumber[0]);
+}
+
+function showQuestion(questionNum) {
+
+    //select body element
+    var bodyEl = document.querySelector("body");
+
+    var sectionEl = document.createElement("section");
+    bodyEl.appendChild(sectionEl);
+    var pEl = document.createElement("p");
+    //console.log(Object(questionNum).question);
+    console.log(question1.question);
+    pEl.textContent = question1.question;
+    sectionEl.appendChild(pEl);
+    var olEl = document.createElement("ol");
+    sectionEl.appendChild(olEl);
+    for (var i=0; i < question1.choice.length; i++) {
+        var liNum = "li" + i + "El";
+        var liNum = document.createElement("li");
+        olEl.appendChild(liNum);
+        liNum.textContent = question1.choice[i];
+    }
+    var h2El = document.createElement("h2");
+    sectionEl.appendChild(h2El);
+
+
+
+}
+
 //User Interactions====================================================
-    //prompt to start quiz
-    //show question & options/choices
-    //show highscores link upper left corner
-    //show timer upper right corner
-    //timer counts down
-    //show Wrong! or Correct! after user selects or times runs out on each question
-    //show All done! message when all questions answered or times runs out
-    //show final score
-    //show form input field for initials
-    //ask for initials to be entered
-    //include Submit button
+    //select choice
+    //check if choice is correct
+        //make sounds on correct/wrong
+        //show rightAnswer/wrongAnswer string with borderline above
+    //enter initials
+    //click go back button
+    //click clear highscores
+    //click highscores link
 
     //display highscores/leaderboard
         //apply styles to leaderboard
@@ -85,6 +142,7 @@ var highScoresLinkText: "Highscores";
     
     //hide highscores link upper left corner
     //hide timer upper right corner
+
 //Initialization=======================================================
     //
     //

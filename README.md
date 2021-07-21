@@ -13,7 +13,7 @@ This repo is homework4 which covers Web API's and features dynamically updated H
 - [Task](#task)
 - [User Story](#user-story)
 - [Acceptance Criteria](#acceptance-criteria)
-- [Mock Up](#mock)
+- [Mock Up](#mock-up)
 - [Grading Requirements](#grading-requirements)
 - [Review](#review)
 
@@ -45,7 +45,7 @@ WHEN the game is over
 THEN I can save my initials and my score
 ```
 
-## Mock-Up
+## Mock Up
 
 The following animation demonstrates the application functionality:
 ![User must answer the challenge questions before time runs out, highscores will be maintained](./assets/images/04-web-apis-homework-demo.gif)
