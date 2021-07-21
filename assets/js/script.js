@@ -229,14 +229,19 @@ function allDoneEnterInitials() {
     inputEl.setAttribute("name", "userInitials");
     formEl.appendChild(inputEl);
     var submitButtonEl = document.createElement("button");
-    submitButtonEl.setAttribute("id", "userInitials");
+    //submitButtonEl.setAttribute("id", "userInitials");
     submitButtonEl.setAttribute("type", "submit");
     submitButtonEl.textContent = "Submit";
     if (submitButtonEl) {
         submitButtonEl.addEventListener("click", function() {
-            event.stopPropagation();
-            alert("clicked Enter Initials submit button");
-            showHighScores();
+            event.preventDefault();
+            if (!inputEl.value) {
+                alert("You must enter initials.");
+            } else {
+                localStorage.setItem("name", inputEl.value);
+                localStorage.setItem("score", score);
+                showHighScores(event, sectionEl);
+            }
         });
     } else {
         alert('No Enter Initials submit button');
@@ -244,63 +249,43 @@ function allDoneEnterInitials() {
     formEl.appendChild(submitButtonEl);
 }
 
-function showHighScores(event) {
-    event.stopPropagation();
-    alert("hiii");
-/*
-    <div class="highscores-container">
-        <p>High Scores</p>
-        <ol>
-            <li>Claudia - 80</li>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ol>
-        <button type="submit">Go back</button>
-        <button type="submit">Clear high scores</button>
-    </div>
-*/
+function showHighScores(event, allDoneEnterInitialsSectionEl) {
+    event.preventDefault();
+
+    //remove All done & Enter Initials elements which are all inside section
+    var sectionEl = document.body.removeChild(allDoneEnterInitialsSectionEl);
+
+    //create, setAttributes, build, place High Scores
     var bodyEl = document.querySelector("body");
     var divHighScoresEl = document.createElement("div");
     divHighScoresEl.setAttribute("class", "highscores-container");
     bodyEl.appendChild(divHighScoresEl);
     var pHighScoresEl = document.createElement("p");
     divHighScoresEl.appendChild(pHighScoresEl);
-    divHighScoresEl.textContent = "High Scores";
+    pHighScoresEl.textContent = "High Scores";
     var olHighScoresEl = document.createElement("ol");
     divHighScoresEl.appendChild(olHighScoresEl);
     var liHighScoresEl = document.createElement("li");
+    var userNameScoreStored = localStorage.getItem("name") + " - " + localStorage.getItem("score");
+    liHighScoresEl.textContent = userNameScoreStored;
     olHighScoresEl.appendChild(liHighScoresEl);
     var goBackBtnHighScoresEl = document.createElement("button");
     goBackBtnHighScoresEl.setAttribute("type", "submit");
     goBackBtnHighScoresEl.textContent = "Go back";
+    divHighScoresEl.appendChild(goBackBtnHighScoresEl);
     var clearHighScoresBtnHighScoresEl = document.createElement("button");
     clearHighScoresBtnHighScoresEl.setAttribute("type", "submit");
     clearHighScoresBtnHighScoresEl.textContent = "Clear high scores";
+    divHighScoresEl.appendChild(clearHighScoresBtnHighScoresEl);
 
-
-
-    //var highScoresDiv = document.querySelector(".highscores-container");
-    //highScoresDiv.setAttribute("style", "display: inline");
 }
 
 
 //User Interactions====================================================
-    //enter initials
-    //var userInitialsBtn = document.querySelector("#userInitials");
-    //document.addEventListener("submit", showHighScores)
+
     //click go back button
     //click clear highscores
     //click highscores link
-
-    //display highscores/leaderboard
-        //apply styles to leaderboard
-        //(ex: 1. Name - ### where ### is score)
-        //inlude Go Back button option
-        //incluse Clear Highscores button option
-    
-    //hide highscores link upper left corner
-    //hide timer upper right corner
 
 //Initialization=======================================================
 
