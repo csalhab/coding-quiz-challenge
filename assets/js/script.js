@@ -121,6 +121,7 @@ function showQuestion(quizItem) {
 
     //create div, that's part of section, to hold choices
     var divEl = document.createElement("div");
+    divEl.setAttribute("class", "choicesDiv");
     sectionEl.appendChild(divEl);
     
     //create buttons (not ol with li's) for choices, need click event
