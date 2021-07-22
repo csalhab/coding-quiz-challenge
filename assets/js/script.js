@@ -123,10 +123,6 @@ function showQuestion(quizItem) {
     var sectionEl = document.createElement("section");
     bodyEl.appendChild(sectionEl);
 
-    //console.log(quizItem);
-    //console.log(quizItem.question);
-    //console.log(quizItem.choice[0]);
-
     //create p tag, that's part of section, to hold question
     var pEl = document.createElement("p");
     pEl.textContent = quizItem.question;
@@ -144,7 +140,6 @@ function showQuestion(quizItem) {
         //listen for which choice button is clicked
         quizChoiceButton.addEventListener("click", function() {
             if (event.target.firstChild.data != quizItem.answer) {
-                console.log("wrong button selected");
                 quizChoiceButton.disabled = true;
                 //user selected wrong choice button
                 var wrongHeading = document.createElement("h2");
@@ -160,7 +155,6 @@ function showQuestion(quizItem) {
                 //show updated time after penalty applied
                 timeEl.textContent = "Time: " + secondsLeft;
             } else {
-                console.log("correct answer");
                 quizChoiceButton.disabled = true;
                 //user selected correct choice button
                 var correctHeading = document.createElement("h2");
@@ -184,7 +178,6 @@ function showQuestion(quizItem) {
 }
 
 function clearQuestionChoices() {
-    console.log("clearing next");
     //this allows Wrong/Correct info to be displayed for a brief second before next question/choices appear
     setTimeout(function(){ 
         
@@ -193,11 +186,9 @@ function clearQuestionChoices() {
         questionCounter += 1;
             
         if (questionCounter < quiz.length) {
-            console.log("counter incremented by 1, showQuestion called with next question/choice");
             showQuestion(quiz[questionCounter]);
         } else {
             //show Enter Initials
-            console.log("enter initials next");
             allDoneEnterInitials();
         }
          
