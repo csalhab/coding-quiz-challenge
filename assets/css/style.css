@@ -1,17 +1,45 @@
 * {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    color: #800080;
-    border: 1px solid red;
+    font-size: 18px;
+    color: #570357;
+    border: steelblue 1px solid;
 }
 
 main {
     text-align: center;
 }
 
+header {
+    font-size: 32px;
+    color: black;
+    font-weight: bold;
+    padding-bottom: 30px;
+}
+
+#quizStart {
+    display: flex;
+    flex-direction: column;
+}
+
+.introText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+p {
+    color: black;
+    width: 40%;
+    padding: 10px;
+}
 .container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+#startQuiz {
+    margin-top: 30px;
 }
 
 .enterInitials {
@@ -19,5 +47,39 @@ main {
 }
 
 .highscores-container {
-    display: inline;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.highscores-container p {
+    /* top 0px, right and left 0px, bottom 25px */
+    padding: 0px 0px 25px;
+    font-size: 32px;
+    font-weight: bold;
+    width: auto;
+}
+
+.highscores-container li {
+    width: 125%;
+    background-color: #e4d3e4;
+    padding: 10px 35px 10px;
+}
+
+.divHighScoresBtns{
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    place-content: space-around;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+section p {
+    font-size: 32px;
+    font-weight: bold;
 }

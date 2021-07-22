@@ -57,20 +57,14 @@ var timerInterval;
 
 var didQuizStart = false;
 
-//highscore
-var highScoresMsg = "Highscores";
-var highScoresLinkText = "Highscores";
-
 //select element by class
 var timeEl = document.querySelector(".time");
 
 //select the viewHighscoresLink element that's on the top of the page
 var viewHighscoresLinkEl = document.querySelector(".viewHighscoresLink");
 
-
 //this returns button element, which has an id of #startQuiz and assigns it to a variable called startQuizButton
 var startQuizButton = document.querySelector("#startQuiz");
-
 
 //Functions============================================================
 
@@ -108,6 +102,8 @@ function setTime() {
 function hideStartElements() {
     var quizStartEl = document.querySelector("#quizStart");
     quizStartEl.setAttribute("style", "display: none");
+    var startQuizBtnEl = document.querySelector("#startQuiz");
+    startQuizBtnEl.setAttribute("style", "display: none");
 }
 
 function showQuestion(quizItem) {
@@ -269,7 +265,7 @@ function showHighScores(event, allDoneEnterInitialsSectionEl) {
     bodyEl.appendChild(divHighScoresEl);
     var pHighScoresEl = document.createElement("p");
     divHighScoresEl.appendChild(pHighScoresEl);
-    pHighScoresEl.textContent = "High Scores";
+    pHighScoresEl.textContent = "Highscores";
     var olHighScoresEl = document.createElement("ol");
     divHighScoresEl.appendChild(olHighScoresEl);
     var liHighScoresEl = document.createElement("li");
@@ -278,18 +274,21 @@ function showHighScores(event, allDoneEnterInitialsSectionEl) {
     if (userNameStored === null || scoreStored === null) {
         var userNameScoreStored = "";
     } else {
-        var userNameScoreStored = localStorage.getItem("name") + " - " + localStorage.getItem("score");
+        var userNameScoreStored = "#1: " + localStorage.getItem("name") + " - " + localStorage.getItem("score");
     }
     liHighScoresEl.textContent = userNameScoreStored;
     olHighScoresEl.appendChild(liHighScoresEl);
+    var divHighScoresBtnsEl = document.createElement("div");
+    divHighScoresBtnsEl.setAttribute("class", "divHighScoresBtns");
+    bodyEl.appendChild(divHighScoresBtnsEl);
     var goBackBtnHighScoresEl = document.createElement("button");
     goBackBtnHighScoresEl.setAttribute("type", "submit");
     goBackBtnHighScoresEl.textContent = "Go back";
-    divHighScoresEl.appendChild(goBackBtnHighScoresEl);
+    divHighScoresBtnsEl.appendChild(goBackBtnHighScoresEl);
     var clearHighScoresBtnHighScoresEl = document.createElement("button");
     clearHighScoresBtnHighScoresEl.setAttribute("type", "submit");
     clearHighScoresBtnHighScoresEl.textContent = "Clear high scores";
-    divHighScoresEl.appendChild(clearHighScoresBtnHighScoresEl);
+    divHighScoresBtnsEl.appendChild(clearHighScoresBtnHighScoresEl);
 
     clearHighScoresBtnHighScoresEl.addEventListener("click", function() {
         liHighScoresEl.innerHTML = " ";
@@ -298,8 +297,11 @@ function showHighScores(event, allDoneEnterInitialsSectionEl) {
 
     goBackBtnHighScoresEl.addEventListener("click", function() {
         var priorDivHighScoresEl = document.body.removeChild(divHighScoresEl);
+        var priorDiveHighScoresBtnsEl = document.body.removeChild(divHighScoresBtnsEl);
         var quizStartEl = document.querySelector("#quizStart");
         quizStartEl.setAttribute("style", "display: inline");
+        var startQuizBtnEl = document.querySelector("#startQuiz");
+        startQuizBtnEl.setAttribute("style", "display: inline");
         viewHighscoresLinkEl.disabled = false;
         questionCounter = 0;
         score = 0;
