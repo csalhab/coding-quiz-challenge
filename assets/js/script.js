@@ -1,5 +1,3 @@
-
-
 //Data (global variables, things to keep track of)=====================
 //made array of objects
 var quiz = [
@@ -87,7 +85,6 @@ function setTime() {
     //trigger hide header, div/p/instructions and startQuizButton
     hideStartElements();
 
-
     showQuestion(quiz[questionCounter]);
 
     //sets interval in variable for Time countdown
@@ -111,8 +108,6 @@ function setTime() {
 function hideStartElements() {
     var quizStartEl = document.querySelector("#quizStart");
     quizStartEl.setAttribute("style", "display: none");
-
-    //showQuestion(quiz[questionCounter]);
 }
 
 function showQuestion(quizItem) {
@@ -325,9 +320,8 @@ function viewHighscoresLinkElHandler(event) {
 }
 
 //User Interactions====================================================
-viewHighscoresLinkEl.addEventListener("click", viewHighscoresLinkElHandler);
-    //click go back button
 
+viewHighscoresLinkEl.addEventListener("click", viewHighscoresLinkElHandler);
 
 
 //Initialization=======================================================
