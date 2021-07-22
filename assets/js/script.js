@@ -57,12 +57,17 @@ var questionCounter = 0;
 
 var timerInterval;
 
+var didQuizStart = false;
+
 //highscore
 var highScoresMsg = "Highscores";
 var highScoresLinkText = "Highscores";
 
 //select element by class
 var timeEl = document.querySelector(".time");
+
+//select the viewHighscoresLink element that's on the top of the page
+var viewHighscoresLinkEl = document.querySelector(".viewHighscoresLink");
 
 
 //this returns button element, which has an id of #startQuiz and assigns it to a variable called startQuizButton
@@ -72,13 +77,20 @@ var startQuizButton = document.querySelector("#startQuiz");
 //Functions============================================================
 
 function setTime() {
+
+    //didQuizStart = true;
+    viewHighscoresLinkEl.disabled = true;
+
     //shows starting time
     timeEl.textContent = "Time: " + secondsLeft;
 
     //trigger hide header, div/p/instructions and startQuizButton
     hideStartElements();
 
-    //sets interval in variable
+
+    showQuestion(quiz[questionCounter]);
+
+    //sets interval in variable for Time countdown
     timerInterval = setInterval(function() {
         secondsLeft--;
         //shows decrementing time
@@ -90,6 +102,7 @@ function setTime() {
             //stops execution of setInterval's actions
             clearInterval(timerInterval);
             //trigger All done!
+            allDoneEnterInitials();
         }
 
     }, 1000); //closes setInterval, triggered every second/1000ms
@@ -99,7 +112,7 @@ function hideStartElements() {
     var quizStartEl = document.querySelector("#quizStart");
     quizStartEl.setAttribute("style", "display: none");
 
-    showQuestion(quiz[questionCounter]);
+    //showQuestion(quiz[questionCounter]);
 }
 
 function showQuestion(quizItem) {
@@ -110,9 +123,9 @@ function showQuestion(quizItem) {
     var sectionEl = document.createElement("section");
     bodyEl.appendChild(sectionEl);
 
-    console.log(quizItem);
-    console.log(quizItem.question);
-    console.log(quizItem.choice[0]);
+    //console.log(quizItem);
+    //console.log(quizItem.question);
+    //console.log(quizItem.choice[0]);
 
     //create p tag, that's part of section, to hold question
     var pEl = document.createElement("p");
@@ -132,6 +145,7 @@ function showQuestion(quizItem) {
         quizChoiceButton.addEventListener("click", function() {
             if (event.target.firstChild.data != quizItem.answer) {
                 console.log("wrong button selected");
+                quizChoiceButton.disabled = true;
                 //user selected wrong choice button
                 var wrongHeading = document.createElement("h2");
                 //show Wrong! or Wrong!/was last question
@@ -147,6 +161,7 @@ function showQuestion(quizItem) {
                 timeEl.textContent = "Time: " + secondsLeft;
             } else {
                 console.log("correct answer");
+                quizChoiceButton.disabled = true;
                 //user selected correct choice button
                 var correctHeading = document.createElement("h2");
                 //show Correct! or Correct!/was last question
@@ -170,7 +185,7 @@ function showQuestion(quizItem) {
 
 function clearQuestionChoices() {
     console.log("clearing next");
-    //this allows Wrong/Correct info to be displayed for a brief 3 seconds before next question/choices appear
+    //this allows Wrong/Correct info to be displayed for a brief second before next question/choices appear
     setTimeout(function(){ 
         
         var existingSectionEl = document.querySelector("section");
@@ -191,6 +206,8 @@ function clearQuestionChoices() {
 }
 
 function allDoneEnterInitials() {
+
+    secondsLeft = 60;
 
     timeEl.textContent = "Time: 0";
     clearInterval(timerInterval);
@@ -250,10 +267,14 @@ function allDoneEnterInitials() {
 }
 
 function showHighScores(event, allDoneEnterInitialsSectionEl) {
-    event.preventDefault();
 
-    //remove All done & Enter Initials elements which are all inside section
-    var sectionEl = document.body.removeChild(allDoneEnterInitialsSectionEl);
+    didQuizStart = false;
+
+    if (allDoneEnterInitialsSectionEl) {
+        event.preventDefault();
+        //remove All done & Enter Initials elements which are all inside section
+        var sectionEl = document.body.removeChild(allDoneEnterInitialsSectionEl);
+    }
 
     //create, setAttributes, build, place High Scores
     var bodyEl = document.querySelector("body");
@@ -266,7 +287,13 @@ function showHighScores(event, allDoneEnterInitialsSectionEl) {
     var olHighScoresEl = document.createElement("ol");
     divHighScoresEl.appendChild(olHighScoresEl);
     var liHighScoresEl = document.createElement("li");
-    var userNameScoreStored = localStorage.getItem("name") + " - " + localStorage.getItem("score");
+    var userNameStored = localStorage.getItem("name");
+    var scoreStored = localStorage.getItem("score");
+    if (userNameStored === null || scoreStored === null) {
+        var userNameScoreStored = "";
+    } else {
+        var userNameScoreStored = localStorage.getItem("name") + " - " + localStorage.getItem("score");
+    }
     liHighScoresEl.textContent = userNameScoreStored;
     olHighScoresEl.appendChild(liHighScoresEl);
     var goBackBtnHighScoresEl = document.createElement("button");
@@ -278,14 +305,39 @@ function showHighScores(event, allDoneEnterInitialsSectionEl) {
     clearHighScoresBtnHighScoresEl.textContent = "Clear high scores";
     divHighScoresEl.appendChild(clearHighScoresBtnHighScoresEl);
 
+    clearHighScoresBtnHighScoresEl.addEventListener("click", function() {
+        liHighScoresEl.innerHTML = " ";
+        localStorage.clear();
+    });
+
+    goBackBtnHighScoresEl.addEventListener("click", function() {
+        var priorDivHighScoresEl = document.body.removeChild(divHighScoresEl);
+        var quizStartEl = document.querySelector("#quizStart");
+        quizStartEl.setAttribute("style", "display: inline");
+        viewHighscoresLinkEl.disabled = false;
+        questionCounter = 0;
+        score = 0;
+    });
+
 }
 
+function viewHighscoresLinkElHandler(event) {
+    //since already on high scores, disable button
+    event.target.disabled = true;
+    if (didQuizStart) {
+        var existingSectionEl = document.querySelector("section");
+        var priorQuestionChoices = document.body.removeChild(existingSectionEl);
+    } else {
+        hideStartElements();
+    }
+    showHighScores();
+}
 
 //User Interactions====================================================
-
+viewHighscoresLinkEl.addEventListener("click", viewHighscoresLinkElHandler);
     //click go back button
-    //click clear highscores
-    //click highscores link
+
+
 
 //Initialization=======================================================
 
